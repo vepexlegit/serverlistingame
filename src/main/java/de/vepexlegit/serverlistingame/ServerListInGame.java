@@ -29,7 +29,7 @@ public class ServerListInGame {
     @SubscribeEvent
     public void onGuiScreenInit(GuiScreenEvent.InitGuiEvent.Post event) {
         if (event.gui instanceof GuiIngameMenu) {
-            int x = event.gui.width / 2 - 99;
+            int x = event.gui.width / 2 - 100;
             int y = event.gui.height / 4 + 128;
             event.buttonList.add(new GuiButton(100, x, y, "ServerList"));
         }
