@@ -2,7 +2,7 @@
 {
   "modid": "serverlistingame",
   "name": "ServerListInGame",
-  "description": "Server List InGame | 1.8.9",
+  "description": "ServerList InGame | 1.7.10",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "https://github.com/vepexlegit",
