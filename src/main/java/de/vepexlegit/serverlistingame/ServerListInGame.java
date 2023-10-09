@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
-import net.minecraft.init.Blocks;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -20,25 +20,37 @@ public class ServerListInGame {
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        System.out.println("DIRT BLOCK >> "+Blocks.dirt.getUnlocalizedName());
         if (event.getSide() == Side.CLIENT) {
             MinecraftForge.EVENT_BUS.register(this);
         }
     }
 
+    public static Minecraft mc = Minecraft.getMinecraft();
+    public static int i = -16;
+
     @SubscribeEvent
     public void onGuiScreenInit(GuiScreenEvent.InitGuiEvent.Post event) {
-        if (event.gui instanceof GuiIngameMenu) {
-            int x = event.gui.width / 2 - 100;
-            int y = event.gui.height / 4 + 128;
+        GuiScreen screen = event.gui;
+        if (screen instanceof GuiIngameMenu) {
+            int x = screen.width / 2 - 100;
+            int y = screen.height / 4 + 72 + i;
             event.buttonList.add(new GuiButton(100, x, y, "ServerList"));
         }
     }
 
     @SubscribeEvent
+    public void onGuiInitPost(GuiScreenEvent.InitGuiEvent.Post event) {
+        GuiScreen screen = event.gui;
+        if (screen instanceof GuiIngameMenu) {
+            event.buttonList.removeIf(guiButton -> guiButton.id == 7);
+        }
+    }
+
+    @SubscribeEvent
     public void onGuiScreenActionPerformed(GuiScreenEvent.ActionPerformedEvent.Post event) {
-        if (event.gui instanceof GuiIngameMenu && event.button.id == 100) {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiMultiplayer(event.gui));
+        GuiScreen screen = event.gui;
+        if (screen instanceof GuiIngameMenu && event.button.id == 100) {
+            mc.displayGuiScreen(new GuiMultiplayer(screen));
         }
     }
 }
